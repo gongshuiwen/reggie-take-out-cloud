@@ -21,7 +21,11 @@ public class LoginCheckFilter implements Filter {
             "/user/login",
             "/user/sendMsgCode",
             "/front/**",
-            "/backend/**"
+            "/backend/**",
+            "/doc.html",
+            "/webjars/**",
+            "/swagger-resources",
+            "/v2/api-docs"
     };
 
     @Override
