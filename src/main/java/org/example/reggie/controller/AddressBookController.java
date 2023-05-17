@@ -35,7 +35,7 @@ public class AddressBookController {
     public R<String> create(@RequestBody AddressBook addressBook) {
         LambdaQueryWrapper<AddressBook> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(AddressBook::getUserId, BaseContext.getCurrentUserId());
-        addressBook.setIsDefault(addressBookService.count(wrapper) == 0 ? 1 : 0);
+        addressBook.setIsDefault(addressBookService.count(wrapper) == 0);
         addressBook.setUserId(BaseContext.getCurrentUserId());
         addressBookService.save(addressBook);
         return R.success("");
