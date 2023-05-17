@@ -24,8 +24,6 @@ spring:
 logging:
   level:
     root: info
-reggie:
-  base-path: data/
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true

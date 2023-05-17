@@ -1,6 +1,10 @@
 package org.example.reggie.storage;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -13,13 +17,28 @@ import java.util.stream.Stream;
 
 @Slf4j
 @Service
-public class FileStorageService implements StorageService{
+public class FileStorageService implements StorageService, InitializingBean {
 
-    private static final String basePath = "data/";
+    private static final String DEFAULT_BASE_PATH = "/data/";
+
+    private boolean isClassPathResource = true;
+    private String basePath;
 
     @Override
     public void init() {
+        log.info("Files Stored in: {}", isClassPathResource ? "class_path:" + basePath : basePath);
+    }
 
+    @Autowired
+    public void setBasePath(@Value("${reggie.base-path:}") String path) {
+        if (path.isEmpty()) {
+            this.basePath = DEFAULT_BASE_PATH;
+        } else if (path.toLowerCase().startsWith("class_path:")) {
+            this.basePath = path.substring(11);
+        } else {
+            this.basePath = path;
+            this.isClassPathResource = false;
+        }
     }
 
     @Override
@@ -58,7 +77,7 @@ public class FileStorageService implements StorageService{
 
     @Override
     public Resource loadAsResource(String filename){
-        return new FileSystemResource(basePath + filename);
+        return isClassPathResource ? new ClassPathResource(basePath + filename) : new FileSystemResource(basePath + filename);
     }
 
     @Override
@@ -74,5 +93,10 @@ public class FileStorageService implements StorageService{
     @Override
     public void deleteAll() {
 
+    }
+
+    @Override
+    public void afterPropertiesSet() {
+        init();
     }
 }
