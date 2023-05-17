@@ -11,9 +11,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.math.BigInteger;
-import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -59,26 +56,5 @@ public class EmployeeController {
         wrapper.like(name != null, Employee::getName, name);
         wrapper.orderByDesc(Employee::getUpdateTime);
         return R.success(employeeService.page(new Page<>(page, pageSize), wrapper));
-    }
-
-    @PostMapping("/login")
-    public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {
-        LambdaQueryWrapper<Employee> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Employee::getUsername, employee.getUsername());
-        Employee emp = employeeService.getOne(wrapper);
-
-        if (emp == null) return R.error("登录失败，用户不存在！");
-        if (emp.getStatus() == 0) return R.error("登录失败，用户已被禁用！");
-        if (!Objects.equals(emp.getPassword(), DigestUtils.md5DigestAsHex(employee.getPassword().getBytes())))
-            return R.error("登录失败，用户密码错误！");
-
-        request.getSession().setAttribute("employeeId", emp.getId());
-        return R.success(emp);
-    }
-
-    @PostMapping("/logout")
-    public R<String> logout(HttpServletRequest request) {
-        request.getSession().removeAttribute("employeeId");
-        return R.success("退出成功！");
     }
 }

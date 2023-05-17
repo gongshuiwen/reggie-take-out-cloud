@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Slf4j
-@WebFilter(filterName = "loginCheckFilter", urlPatterns = "/*")
+@Deprecated
+//@WebFilter(filterName = "loginCheckFilter", urlPatterns = "/*")
 public class LoginCheckFilter implements Filter {
 
     private final static AntPathMatcher matcher = new AntPathMatcher();
