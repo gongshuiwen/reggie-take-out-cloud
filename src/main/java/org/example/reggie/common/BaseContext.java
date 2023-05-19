@@ -1,23 +1,34 @@
 package org.example.reggie.common;
 
+import org.example.reggie.entity.Employee;
+import org.example.reggie.entity.User;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 public class BaseContext {
 
-    private static final ThreadLocal<Long> currentEmployeeId = new ThreadLocal<>();
-    private static final ThreadLocal<Long> currentUserId = new ThreadLocal<>();
-
     public static Long getCurrentEmployeeId() {
-        return currentEmployeeId.get();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof Employee) {
+            return ((Employee) principal).getId();
+        }
+        return null;
     }
 
+    @Deprecated
+    @SuppressWarnings("all")
     public static void setCurrentEmployeeId(Long currentId) {
-        currentEmployeeId.set(currentId);
     }
 
     public static Long getCurrentUserId() {
-        return currentUserId.get();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof User) {
+            return ((User) principal).getId();
+        }
+        return null;
     }
 
+    @Deprecated
+    @SuppressWarnings("all")
     public static void setCurrentUserId(Long currentId) {
-        currentUserId.set(currentId);
     }
 }
