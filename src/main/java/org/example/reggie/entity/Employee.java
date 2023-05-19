@@ -2,6 +2,7 @@ package org.example.reggie.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -39,6 +40,7 @@ public class Employee implements Serializable, UserDetails {
     @ApiModelProperty("用户名")
     private String username;
 
+    @JsonIgnore
     @ApiModelProperty("密码")
     private String password;
 

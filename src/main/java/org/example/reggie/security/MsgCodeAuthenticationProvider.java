@@ -1,13 +1,13 @@
 package org.example.reggie.security;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import org.example.reggie.common.R;
 import org.example.reggie.entity.User;
 import org.example.reggie.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
@@ -47,8 +47,8 @@ public class MsgCodeAuthenticationProvider implements AuthenticationProvider {
             throw new DisabledException("登录失败，用户已被禁用！");
         }
         MsgCodeAuthenticationToken authenticatedToken = MsgCodeAuthenticationToken
-                .authenticated(phone, code, this.authoritiesMapper.mapAuthorities(user.getAuthorities()));
-        authenticatedToken.setDetails(user);
+                .authenticated(user, code, this.authoritiesMapper.mapAuthorities(user.getAuthorities()));
+        authenticatedToken.setDetails(authentication.getDetails());
         return authenticatedToken;
     }
 
