@@ -2,7 +2,7 @@ function sendMsgCodeApi(data) {
     return $axios({
       'url': '/user/sendMsgCode',
       'method': 'post',
-      data
+      'params': data
     })
   }
 
