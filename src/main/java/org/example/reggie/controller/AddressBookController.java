@@ -1,6 +1,5 @@
 package org.example.reggie.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.example.reggie.common.BaseContext;
 import org.example.reggie.common.R;
@@ -24,47 +23,33 @@ public class AddressBookController {
         return R.success(addressBookService.getById(id));
     }
 
-    @GetMapping("/list")
-    public R<List<AddressBook>> list() {
-        LambdaQueryWrapper<AddressBook> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(AddressBook::getUserId, BaseContext.getCurrentUserId());
-        return R.success(addressBookService.list(wrapper));
-    }
-
     @PostMapping
-    public R<String> create(@RequestBody AddressBook addressBook) {
-        LambdaQueryWrapper<AddressBook> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(AddressBook::getUserId, BaseContext.getCurrentUserId());
-        addressBook.setIsDefault(addressBookService.count(wrapper) == 0);
-        addressBook.setUserId(BaseContext.getCurrentUserId());
-        addressBookService.save(addressBook);
-        return R.success("");
+    public R<AddressBook> create(@RequestBody AddressBook addressBook) {
+        return R.success(addressBookService.saveWithUserId(BaseContext.getCurrentUserId(), addressBook));
     }
 
     @PutMapping
-    public R<String> update(@RequestBody AddressBook addressBook) {
-        addressBook.setUserId(BaseContext.getCurrentUserId());
-        addressBookService.updateById(addressBook);
-        return R.success("");
+    public R<Boolean> update(@RequestBody AddressBook addressBook) {
+        return R.success(addressBookService.updateById(addressBook));
     }
 
     @DeleteMapping
-    public R<String> delete(@RequestParam List<Long> ids){
-        addressBookService.removeByIds(ids);
-        return R.success("");
+    public R<Boolean> delete(@RequestParam List<Long> ids){
+        return R.success(addressBookService.removeByIds(ids));
+    }
+
+    @GetMapping("/list")
+    public R<List<AddressBook>> list() {
+        return R.success(addressBookService.listByUserId(BaseContext.getCurrentUserId()));
     }
 
     @GetMapping("/default")
     public R<AddressBook> getDefault() {
-        LambdaQueryWrapper<AddressBook> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(AddressBook::getUserId, BaseContext.getCurrentUserId());
-        wrapper.eq(AddressBook::getIsDefault, 1);
-        return R.success(addressBookService.getOne(wrapper));
+        return R.success(addressBookService.getUserDefaultAddressBook(BaseContext.getCurrentUserId()));
     }
 
     @PutMapping("/default")
-    public R<String> setDefault(@RequestBody AddressBook addressBook) {
-        addressBookService.changeUserDefaultAddressBook(BaseContext.getCurrentUserId(), addressBook.getId());
-        return R.success("");
+    public R<Boolean> setDefault(@RequestBody AddressBook addressBook) {
+        return R.success(addressBookService.setUserDefaultAddressBook(BaseContext.getCurrentUserId(), addressBook.getId()));
     }
 }
