@@ -1,15 +1,14 @@
 package org.example.reggie.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
-import org.example.reggie.service.EmployeeService;
 import org.example.reggie.common.R;
 import org.example.reggie.entity.Employee;
+import org.example.reggie.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Slf4j
@@ -17,44 +16,32 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/employee")
 public class EmployeeController {
 
-    private static final String DEFAULT_PASSWORD = "123456";
-
     @Autowired
     private EmployeeService employeeService;
 
     @GetMapping("/{id}")
     public R<Employee> get(@PathVariable Long id) {
-        Employee employee = employeeService.getById(id);
-        if (employee == null) {
-            return R.error("用户不存在！");
-        }
-        return R.success(employee);
+        return R.success(employeeService.getById(id));
     }
 
     @PostMapping
-    public R<String> create(@RequestBody Employee employee) {
-        employee.setPassword(DigestUtils.md5DigestAsHex(DEFAULT_PASSWORD.getBytes()));
-        employeeService.save(employee);
-        return R.success("");
+    public R<Employee> create(@RequestBody Employee employee) {
+        return R.success(employeeService.saveWithDefaultPassword(employee));
     }
 
     @PutMapping
-    public R<String> update(@RequestBody Employee employee) {
-        employeeService.updateById(employee);
-        return R.success("");
+    public R<Boolean> update(@RequestBody Employee employee) {
+        return R.success(employeeService.updateById(employee));
     }
 
     @DeleteMapping
-    public R<String> delete(@RequestBody Employee employee) {
-        employeeService.removeById(employee.getId());
-        return R.success("");
+    public R<Boolean> delete(@RequestParam List<Long> ids) {
+        return R.success(employeeService.removeByIds(ids));
     }
 
     @GetMapping("/page")
-    public R<Page<Employee>> page(@RequestParam int page, @RequestParam int pageSize, @RequestParam @Nullable String name) {
-        LambdaQueryWrapper<Employee> wrapper = new LambdaQueryWrapper<>();
-        wrapper.like(name != null, Employee::getName, name);
-        wrapper.orderByDesc(Employee::getUpdateTime);
-        return R.success(employeeService.page(new Page<>(page, pageSize), wrapper));
+    public R<Page<Employee>> page(@RequestParam Long page, @RequestParam Long pageSize,
+                                  @RequestParam(required = false) String name) {
+        return R.success(employeeService.pageWithNameOrderByUpdateTime(page, pageSize, name));
     }
 }
