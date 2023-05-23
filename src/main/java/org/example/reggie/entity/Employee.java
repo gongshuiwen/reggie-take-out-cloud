@@ -75,7 +75,10 @@ public class Employee implements Serializable, UserDetails {
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("EMPLOYEE"));
+        if (getId() == 1) {
+            return Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
     }
 
     @Override
