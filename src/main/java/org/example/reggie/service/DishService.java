@@ -9,21 +9,21 @@ import java.util.List;
 
 public interface DishService extends IService<Dish> {
 
-    public Dish getByIdWithFlavors(Long id);
+    Dish getByIdWithFlavors(Long id);
 
-    public Page<Dish> pageWithCategoryName(long current, long size, String name);
+    Page<Dish> pageWithCategoryName(long current, long size, String name);
 
-    public List<Dish> listByCategoryIdWithFlavors(Long categoryId, Integer status);
-
-    @Transactional
-    public void saveWithFlavors(Dish dish);
+    List<Dish> listByCategoryIdWithFlavors(Long categoryId, Integer status);
 
     @Transactional
-    public Dish updateWithFlavors(Dish dish);
+    Dish saveWithFlavors(Dish dish);
 
     @Transactional
-    public void removeByIdsWithFlavors(List<Long> ids);
+    Boolean updateWithFlavors(Dish dish);
 
     @Transactional
-    public void changeStatusByBatchIds(List<Long> ids, int status);
+    Boolean removeByIdsWithFlavors(List<Long> ids);
+
+    @Transactional
+    Boolean changeStatusByBatchIds(List<Long> ids, int status);
 }

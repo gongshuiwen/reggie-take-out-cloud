@@ -138,13 +138,14 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
      */
     @Override
     @CacheEvict(value = DISHES_LIST_BY_CATEGORY_CACHE_KEY, key="#dish.categoryId")
-    public void saveWithFlavors(Dish dish) {
+    public Dish saveWithFlavors(Dish dish) {
         this.save(dish);
         List<DishFlavor> flavors = dish.getFlavors();
         for (DishFlavor flavor: flavors) {
             flavor.setDishId(dish.getId());
         }
         dishFlavorService.saveBatch(flavors);
+        return dish;
     }
 
     /**
@@ -160,7 +161,16 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
             @CacheEvict(value = DISHES_LIST_BY_CATEGORY_CACHE_KEY, key="#dish.categoryId"),
             @CacheEvict(value = DISHES_LIST_BY_CATEGORY_CACHE_KEY, key="#result.categoryId")
     })
-    public Dish updateWithFlavors(Dish dish) {
+    public Boolean updateWithFlavors(Dish dish) {
+        dish = this.updateWithFlavorsImpl(dish);
+        return Boolean.TRUE;
+    }
+
+    @Caching(evict = {
+            @CacheEvict(value = DISHES_LIST_BY_CATEGORY_CACHE_KEY, key="#dish.categoryId"),
+            @CacheEvict(value = DISHES_LIST_BY_CATEGORY_CACHE_KEY, key="#result.categoryId")
+    })
+    private Dish updateWithFlavorsImpl(Dish dish) {
         Dish oldDish = this.getById(dish.getId());
         this.updateById(dish);
 
@@ -181,7 +191,6 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
                 .filter(dishFlavor -> dishFlavor.getDishId() == null)
                 .forEach(dishFlavor -> dishFlavor.setDishId(dish.getId()));
         dishFlavorService.saveOrUpdateBatch(dish.getFlavors());
-
         return oldDish;
     }
 
@@ -192,7 +201,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
      * @param ids 需要删除的菜品信息的 id 集合
      */
     @Override
-    public void removeByIdsWithFlavors(List<Long> ids) {
+    public Boolean removeByIdsWithFlavors(List<Long> ids) {
         // 验证是否关联套餐
         if (setmealDishService.count(new LambdaQueryWrapper<SetmealDish>().in(SetmealDish::getDishId, ids)) > 0) {
             throw new MyException("存在已关联套餐的菜品，请先删除相关套餐！");
@@ -205,7 +214,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
         // 删除菜品和口味信息
         dishFlavorService.remove(new LambdaQueryWrapper<DishFlavor>().in(DishFlavor::getDishId, ids));
-        this.removeByIds(ids);
+        return this.removeByIds(ids);
     }
 
     /**
@@ -217,7 +226,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
      */
     @Override
     @CacheEvict(value = "dishesListByCategoryCache")
-    public void changeStatusByBatchIds(List<Long> ids, int status) {
+    public Boolean changeStatusByBatchIds(List<Long> ids, int status) {
         this.update(new LambdaUpdateWrapper<Dish>()
                 .in(Dish::getId, ids)
                 .eq(Dish::getStatus, 1 - status)
@@ -232,5 +241,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
                }
            }
         );
+
+        return Boolean.TRUE;
     }
 }
