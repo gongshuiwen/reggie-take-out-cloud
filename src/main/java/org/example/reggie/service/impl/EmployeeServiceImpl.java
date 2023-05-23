@@ -21,7 +21,11 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         LambdaQueryWrapper<Employee> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Employee::getUsername, username);
-        return this.getOne(wrapper);
+        UserDetails user = this.getOne(wrapper);
+        if (user == null) {
+            throw new UsernameNotFoundException("");
+        }
+        return user;
     }
 
     @Override
