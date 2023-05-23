@@ -1,6 +1,5 @@
 package org.example.reggie.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.example.reggie.common.R;
 import org.example.reggie.entity.Setmeal;
@@ -23,42 +22,39 @@ public class SetmealController {
         return R.success(setmealService.getByIdWithSetmealDishes(id));
     }
 
+    @PostMapping
+    public R<Boolean> create(@RequestBody Setmeal setmeal) {
+        return R.success(setmealService.saveWithSetmealDishes(setmeal));
+    }
+
+    @PutMapping
+    public R<Boolean> update(@RequestBody Setmeal setmeal) {
+        return R.success(setmealService.updateWithSetmealDishes(setmeal));
+    }
+
+    @DeleteMapping
+    public R<Boolean> delete(@RequestParam List<Long> ids) {
+        return R.success(setmealService.removeWithSetmealDishes(ids));
+    }
+
     @GetMapping("/dish/{id}")
     public R<List<SetmealDish>> getSetmealDishes(@PathVariable Long id) {
         return R.success(setmealService.getByIdWithSetmealDishes(id).getSetmealDishes());
     }
 
     @GetMapping("/page")
-    public R<Page<Setmeal>> page(int page, int pageSize, String name) {
+    public R<Page<Setmeal>> page(@RequestParam Long page, @RequestParam Long pageSize,
+                                 @RequestParam(required = false) String name) {
         return R.success(setmealService.pageWithCategoryName(page, pageSize, name));
     }
 
     @GetMapping("/list")
-    public R<List<Setmeal>> list(Long categoryId, Integer status) {
+    public R<List<Setmeal>> list(@RequestParam Long categoryId, @RequestParam Integer status) {
         return R.success(setmealService.listByCategoryIdWithSetmealDishes(categoryId, status));
     }
 
-    @PostMapping
-    public R<String> create(@RequestBody Setmeal setmeal) {
-        setmealService.saveWithSetmealDishes(setmeal);
-        return R.success("");
-    }
-
-    @PutMapping
-    public R<String> update(@RequestBody Setmeal setmeal) {
-        setmealService.updateWithSetmealDishes(setmeal);
-        return R.success("");
-    }
-
-    @DeleteMapping
-    public R<String> delete(@RequestParam List<Long> ids) {
-        setmealService.removeWithSetmealDishes(ids);
-        return R.success("");
-    }
-
     @PostMapping("/status/{status}")
-    public R<String> changeStatus(@PathVariable int status, @RequestParam List<Long> ids) {
-        setmealService.changeStatusByBatchIds(ids, status);
-        return R.success("");
+    public R<Boolean> changeStatus(@PathVariable Long status, @RequestParam List<Long> ids) {
+        return R.success(setmealService.changeStatusByBatchIds(ids, status));
     }
 }

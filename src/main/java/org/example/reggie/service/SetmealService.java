@@ -9,21 +9,21 @@ import java.util.List;
 
 public interface SetmealService extends IService<Setmeal> {
 
-    public Setmeal getByIdWithSetmealDishes(Long id);
+    Setmeal getByIdWithSetmealDishes(Long id);
 
-    public Page<Setmeal> pageWithCategoryName(long current, long size, String name);
+    Page<Setmeal> pageWithCategoryName(Long pageNum, Long pageSize, String name);
 
-    public List<Setmeal> listByCategoryIdWithSetmealDishes(Long categoryId, Integer status);
-
-    @Transactional
-    public void saveWithSetmealDishes(Setmeal setmeal);
+    List<Setmeal> listByCategoryIdWithSetmealDishes(Long categoryId, Integer status);
 
     @Transactional
-    public void updateWithSetmealDishes(Setmeal setmeal);
+    Boolean saveWithSetmealDishes(Setmeal setmeal);
 
     @Transactional
-    public void removeWithSetmealDishes(List<Long> ids);
+    Boolean updateWithSetmealDishes(Setmeal setmeal);
 
     @Transactional
-    public void changeStatusByBatchIds(List<Long> ids, int status);
+    Boolean removeWithSetmealDishes(List<Long> ids);
+
+    @Transactional
+    Boolean changeStatusByBatchIds(List<Long> ids, Long status);
 }

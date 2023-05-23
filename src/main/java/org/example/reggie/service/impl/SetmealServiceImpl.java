@@ -44,8 +44,8 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
     }
 
     @Override
-    public Page<Setmeal> pageWithCategoryName(long current, long size, String name) {
-        Page<Setmeal> page1 = new Page<>(current, size);
+    public Page<Setmeal> pageWithCategoryName(Long pageNum, Long pageSize, String name) {
+        Page<Setmeal> page1 = new Page<>(pageNum, pageSize);
         LambdaQueryWrapper<Setmeal> wrapper = new LambdaQueryWrapper<>();
         wrapper
                 .like(!(name == null || name.equals("")), Setmeal::getName, name)
@@ -99,17 +99,19 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
     }
 
     @Override
-    public void saveWithSetmealDishes(Setmeal setmeal) {
+    public Boolean saveWithSetmealDishes(Setmeal setmeal) {
         this.save(setmeal);
         setmeal.getSetmealDishes().forEach(setmealDish -> setmealDish.setSetmealId(setmeal.getId()));
         setmealDishService.saveBatch(setmeal.getSetmealDishes());
 
         // 删除所属类别的套餐缓存
         redisTemplate.delete(SETMEALS_LIST_BY_CATEGORY_CACHE_KEY + ":" + setmeal.getCategoryId().toString());
+
+        return Boolean.TRUE;
     }
 
     @Override
-    public void updateWithSetmealDishes(Setmeal setmeal) {
+    public Boolean updateWithSetmealDishes(Setmeal setmeal) {
         // 获取更新前的 setmeal 数据
         Setmeal oldSetmeal = this.getById(setmeal.getId());
 
@@ -137,19 +139,21 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
             redisKeys.add(SETMEALS_LIST_BY_CATEGORY_CACHE_KEY + ":" + oldSetmeal.getCategoryId().toString());
             redisTemplate.delete(redisKeys);
         }
+
+        return Boolean.TRUE;
     }
 
     @Override
-    public void removeWithSetmealDishes(List<Long> ids) {
+    public Boolean removeWithSetmealDishes(List<Long> ids) {
         if (this.count(new LambdaQueryWrapper<Setmeal>().in(Setmeal::getId, ids).eq(Setmeal::getStatus, 1)) > 0) {
             throw new MyException("无法删除启售状态的套餐！");
         };
 
         setmealDishService.remove(new LambdaQueryWrapper<SetmealDish>().in(SetmealDish::getDishId, ids));
-        this.removeByIds(ids);
+        return this.removeByIds(ids);
     }
 
-    public void changeStatusByBatchIds(List<Long> ids, int status) {
+    public Boolean changeStatusByBatchIds(List<Long> ids, Long status) {
         this.update(new LambdaUpdateWrapper<Setmeal>()
                 .in(Setmeal::getId, ids)
                 .eq(Setmeal::getStatus, 1 - status)
@@ -160,5 +164,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
                 .map(setmeal -> SETMEALS_LIST_BY_CATEGORY_CACHE_KEY + ":" + setmeal.getCategoryId().toString())
                 .collect(Collectors.toList());
         redisTemplate.delete(redisKeys);
+
+        return Boolean.TRUE;
     }
 }
