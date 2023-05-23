@@ -30,14 +30,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         wrapper1.in(Dish::getCategoryId, ids);
         if (dishService.count(wrapper1) > 0) {
             throw new MyException("需要删除的分类存在关联的菜品，无法删除！");
-        };
+        }
 
         // 查询当前分类是否关联了套餐，如果已经关联，抛出一个业务异常
         LambdaQueryWrapper<Setmeal> wrapper2 = new LambdaQueryWrapper<>();
         wrapper2.in(Setmeal::getCategoryId, ids);
         if (setmealService.count(wrapper2) > 0) {
             throw new MyException("需要删除的分类存在关联的套餐，无法删除！");
-        };
+        }
 
         // 删除分类
         super.removeByIds(ids);

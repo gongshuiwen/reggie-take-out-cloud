@@ -79,7 +79,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
     public List<Setmeal> listByCategoryIdWithSetmealDishes(Long categoryId, Integer status) {
 
         // 查询缓存
-        List<Setmeal> setmeals = null;
+        List<Setmeal> setmeals;
         String redisKey = SETMEALS_LIST_BY_CATEGORY_CACHE_KEY + ":" + categoryId.toString();
         if ((setmeals = (List<Setmeal>) redisTemplate.opsForValue().get(redisKey)) != null) {
             return setmeals;
@@ -147,7 +147,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
     public Boolean removeWithSetmealDishes(List<Long> ids) {
         if (this.count(new LambdaQueryWrapper<Setmeal>().in(Setmeal::getId, ids).eq(Setmeal::getStatus, 1)) > 0) {
             throw new MyException("无法删除启售状态的套餐！");
-        };
+        }
 
         setmealDishService.remove(new LambdaQueryWrapper<SetmealDish>().in(SetmealDish::getDishId, ids));
         return this.removeByIds(ids);

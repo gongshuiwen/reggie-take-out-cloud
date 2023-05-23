@@ -98,7 +98,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
     }
 
     @Override
-    @Cacheable(value = DISHES_LIST_BY_CATEGORY_CACHE_KEY, key="#categoryId", unless = "")
+    @Cacheable(value = DISHES_LIST_BY_CATEGORY_CACHE_KEY, key="#categoryId")
     public List<Dish> listByCategoryIdWithFlavors(Long categoryId, Integer status) {
         // 获取 dishes
         LambdaQueryWrapper<Dish> wrapper = new LambdaQueryWrapper<>();
