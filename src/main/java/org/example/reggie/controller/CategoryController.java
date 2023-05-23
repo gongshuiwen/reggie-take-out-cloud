@@ -1,12 +1,10 @@
 package org.example.reggie.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
-import org.example.reggie.entity.Dish;
-import org.example.reggie.service.CategoryService;
 import org.example.reggie.common.R;
 import org.example.reggie.entity.Category;
+import org.example.reggie.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
@@ -27,39 +25,28 @@ public class CategoryController {
     }
 
     @PostMapping
-    public R<String> create(@RequestBody Category category) {
+    public R<Category> create(@RequestBody Category category) {
         categoryService.save(category);
-        return R.success("");
+        return R.success(category);
     }
 
     @PutMapping
-    public R<String> update(@RequestBody Category category) {
-        categoryService.updateById(category);
-        return R.success("");
+    public R<Boolean> update(@RequestBody Category category) {
+        return R.success(categoryService.updateById(category));
     }
 
     @DeleteMapping
-    public R<String> delete(@RequestParam Long ids) {
-        categoryService.remove(ids);
-        return R.success("");
+    public R<Boolean> delete(@RequestParam List<Long> ids) {
+        return R.success(categoryService.removeByIds(ids));
     }
 
     @GetMapping("/page")
-    public R<Page<Category>> page(@RequestParam int page, @RequestParam int pageSize) {
-        Page<Category> page1 = new Page<>(page, pageSize);
-        LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<>();
-        wrapper.orderByAsc(Category::getSort);
-        categoryService.page(page1, wrapper);
-        return R.success(page1);
-      }
+    public R<Page<Category>> page(@RequestParam Long page, @RequestParam Long pageSize) {
+        return R.success(categoryService.pageOrderBySort(page, pageSize));
+    }
 
     @GetMapping("/list")
     public R<List<Category>> list(@RequestParam @Nullable Integer type) {
-        LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<>();
-        wrapper
-                .eq(type != null, Category::getType, type)
-                .orderByAsc(Category::getSort)
-                .orderByDesc(Category::getUpdateTime);
-        return R.success(categoryService.list(wrapper));
+        return R.success(categoryService.listWithTypeOrderBySort(type));
     }
 }
