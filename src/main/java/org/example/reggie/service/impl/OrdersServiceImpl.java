@@ -1,8 +1,8 @@
 package org.example.reggie.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.tomcat.jni.Address;
 import org.example.reggie.entity.*;
 import org.example.reggie.mapper.OrdersMapper;
 import org.example.reggie.service.*;
@@ -30,7 +30,8 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
     private UserService userService;
 
     @Override
-    public void submitOrder(Orders order, Long userId) {
+    public Boolean submitOrder(Orders order) {
+        Long userId = order.getUserId();
         User user = userService.getById(userId);
         AddressBook addressBook = addressBookService.getById(order.getAddressBookId());
         List<ShoppingCart> shoppingCarts = shoppingCartService.list(
@@ -68,5 +69,15 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 
         // 删除购物车内容
         shoppingCartService.removeByIds(shoppingCarts.stream().map(ShoppingCart::getId).collect(Collectors.toSet()));
+
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public Page<Orders> pageWithUserIdOrderByOrderTimeDesc(Long pageNum, Long pageSize, Long userId) {
+        LambdaQueryWrapper<Orders> wrapper = new LambdaQueryWrapper<>();
+        wrapper.orderByDesc(Orders::getOrderTime);
+        wrapper.eq(userId != null, Orders::getUserId, userId);
+        return this.page(new Page<>(pageNum, pageSize), wrapper);
     }
 }
