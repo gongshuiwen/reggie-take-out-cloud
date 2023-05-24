@@ -6,16 +6,20 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.reggie.entity.Employee;
 import org.example.reggie.mapper.EmployeeMapper;
 import org.example.reggie.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 
 @Service
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService, UserDetailsService {
 
     private static final String DEFAULT_PASSWORD = "123456";
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -38,7 +42,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     @Override
     public Employee saveWithDefaultPassword(Employee employee) {
-        employee.setPassword(DigestUtils.md5DigestAsHex(DEFAULT_PASSWORD.getBytes()));
+        employee.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
         this.save(employee);
         return employee;
     }
