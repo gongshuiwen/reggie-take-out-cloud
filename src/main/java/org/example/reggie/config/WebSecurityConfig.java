@@ -5,6 +5,7 @@ import org.example.reggie.common.R;
 import org.example.reggie.security.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,6 +32,10 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(
                         (authorize) -> authorize
+                                .mvcMatchers(HttpMethod.GET, "/employee/page").hasRole("ADMIN")
+                                .mvcMatchers(HttpMethod.POST, "/employee").hasRole("ADMIN")
+                                .mvcMatchers(HttpMethod.PUT, "/employee").hasRole("ADMIN")
+                                .mvcMatchers(HttpMethod.DELETE, "/employee").hasRole("ADMIN")
                                 .mvcMatchers("/front/**").permitAll()
                                 .mvcMatchers("/backend/**").permitAll()
                                 .mvcMatchers("/doc.html").permitAll()
