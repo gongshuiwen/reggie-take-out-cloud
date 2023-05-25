@@ -17,6 +17,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.security.jackson2.SecurityJackson2Modules;
 
 import java.time.Duration;
 
@@ -52,6 +53,7 @@ public class RedisConfig {
                 ObjectMapper.DefaultTyping.NON_FINAL,
                 JsonTypeInfo.As.WRAPPER_ARRAY);
         objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.registerModules(SecurityJackson2Modules.getModules(RedisConfig.class.getClassLoader()));
         serializer.setObjectMapper(objectMapper);
         return serializer;
     }
