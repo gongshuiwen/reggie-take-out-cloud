@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -56,6 +57,7 @@ public class WebSecurityConfig {
                 .authenticationProvider(msgCodeAuthenticationProvider)
                 .authenticationProvider(daoAuthenticationProvider)
                 .addFilterAt(filter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(Customizer.withDefaults())
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
                         httpSecurityExceptionHandlingConfigurer
                                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
