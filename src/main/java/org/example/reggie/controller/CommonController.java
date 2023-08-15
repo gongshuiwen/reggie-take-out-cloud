@@ -7,8 +7,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 @RestController
 @RequestMapping("/common")
 public class CommonController {
@@ -17,12 +15,12 @@ public class CommonController {
     private StorageService storageService;
 
     @GetMapping("/download")
-    public Resource download(@RequestParam String name) throws IOException {
+    public Resource download(@RequestParam String name) throws Exception {
         return storageService.loadAsResource(name);
     }
 
     @PostMapping("/upload")
-    public R<String> upload(@RequestBody MultipartFile file) throws IOException {
+    public R<String> upload(@RequestBody MultipartFile file) throws Exception {
         return R.success(storageService.store(file));
     }
 }
