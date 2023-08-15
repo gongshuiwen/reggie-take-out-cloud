@@ -82,6 +82,11 @@
             <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
             <version>4.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.5.4</version>
+        </dependency>
 
         <dependency>
             <groupId>com.mysql</groupId>
