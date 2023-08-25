@@ -3,6 +3,8 @@ package org.example.reggie.config;
 import com.alibaba.fastjson.JSON;
 import org.example.reggie.common.R;
 import org.example.reggie.security.*;
+import org.example.reggie.security.handler.CustomAuthenticationFailureHandler;
+import org.example.reggie.security.handler.CustomAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

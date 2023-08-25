@@ -1,7 +1,8 @@
-package org.example.reggie.security;
+package org.example.reggie.security.handler;
 
 import com.alibaba.fastjson.JSON;
 import org.example.reggie.common.R;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -14,7 +15,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        response.setContentType("application/json;charset=UTF-8");
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().append(JSON.toJSONString(R.success(authentication.getPrincipal())));
     }
 }
