@@ -2,14 +2,21 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/reggie?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://127.0.0.1:3306/reggie?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: password
+  redis:
+    host: 127.0.0.1
+    database: 0
+    port: 6379
+    password:
+    timeout: 1000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-minio:
-  endpoint: http://127.0.0.1:9000
-  access-key: IAe5GIJVpAHuBhz9s2DT
-  secret_key: CselVVxGr6wZTEgTuX5PYKDXlXO9iHkn1IbbduT3
-  bucket-name: reggie
