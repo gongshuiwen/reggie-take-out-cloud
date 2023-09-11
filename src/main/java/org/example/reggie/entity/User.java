@@ -1,8 +1,7 @@
 package org.example.reggie.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,40 +12,33 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 
-/**
- * <p>
- * 用户信息
- * </p>
- *
- * @author gongshuiwen
- * @since 2023-05-17
- */
+
 @Getter
 @Setter
-@ApiModel(value = "User对象", description = "用户信息")
+@Schema(name = "User对象", description = "用户信息")
 public class User implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键")
+    @Schema(name = "主键")
     private Long id;
 
-    @ApiModelProperty("姓名")
+    @Schema(name = "姓名")
     private String name;
 
-    @ApiModelProperty("手机号")
+    @Schema(name = "手机号")
     private String phone;
 
-    @ApiModelProperty("性别")
+    @Schema(name = "性别")
     private String sex;
 
-    @ApiModelProperty("身份证号")
+    @Schema(name = "身份证号")
     private String idNumber;
 
-    @ApiModelProperty("头像")
+    @Schema(name = "头像")
     private String avatar;
 
-    @ApiModelProperty("状态 0:禁用，1:正常")
+    @Schema(name = "状态 0:禁用，1:正常")
     private Integer status;
 
     @Override

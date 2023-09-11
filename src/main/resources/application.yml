@@ -18,17 +18,3 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
-knife4j:
-  enable: true
-  openapi:
-    title: 瑞吉外卖
-    description: "瑞吉外卖项目接口文档"
-    concat: gongshuiwen
-    email: gongshuiwen@gmail.com
-    version: v1.0.0
-    group:
-      default:
-        group-name: default
-        api-rule: package
-        api-rule-resources:
-          - org.example.reggie

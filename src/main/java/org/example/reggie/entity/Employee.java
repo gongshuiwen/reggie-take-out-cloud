@@ -3,8 +3,7 @@ package org.example.reggie.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,59 +15,52 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 
-/**
- * <p>
- * 员工信息
- * </p>
- *
- * @author gongshuiwen
- * @since 2023-05-17
- */
+
 @Getter
 @Setter
-@ApiModel(value = "Employee对象", description = "员工信息")
+@Schema(name = "Employee对象", description = "员工信息")
 public class Employee implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键")
+    @Schema(name = "主键")
     private Long id;
 
-    @ApiModelProperty("姓名")
+    @Schema(name = "姓名")
     private String name;
 
-    @ApiModelProperty("用户名")
+    @Schema(name = "用户名")
     private String username;
 
     @JsonIgnore
-    @ApiModelProperty("密码")
+    @Schema(name = "密码")
     private String password;
 
-    @ApiModelProperty("手机号")
+    @Schema(name = "手机号")
     private String phone;
 
-    @ApiModelProperty("性别")
+    @Schema(name = "性别")
     private String sex;
 
-    @ApiModelProperty("身份证号")
+    @Schema(name = "身份证号")
     private String idNumber;
 
-    @ApiModelProperty("状态 0:禁用，1:正常")
+    @Schema(name = "状态 0:禁用，1:正常")
     private Integer status;
 
-    @ApiModelProperty("创建时间")
+    @Schema(name = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @ApiModelProperty("更新时间")
+    @Schema(name = "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    @ApiModelProperty("创建人")
+    @Schema(name = "创建人")
     @TableField(fill = FieldFill.INSERT)
     private Long createUser;
 
-    @ApiModelProperty("修改人")
+    @Schema(name = "修改人")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 

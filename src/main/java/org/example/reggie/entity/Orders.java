@@ -1,7 +1,6 @@
 package org.example.reggie.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,49 +8,42 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/**
- * <p>
- * 订单表
- * </p>
- *
- * @author gongshuiwen
- * @since 2023-05-17
- */
+
 @Getter
 @Setter
-@ApiModel(value = "Orders对象", description = "订单表")
+@Schema(name = "Orders对象", description = "订单表")
 public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键")
+    @Schema(name = "主键")
     private Long id;
 
-    @ApiModelProperty("订单号")
+    @Schema(name = "订单号")
     private String number;
 
-    @ApiModelProperty("订单状态 1待付款，2待派送，3已派送，4已完成，5已取消")
+    @Schema(name = "订单状态 1待付款，2待派送，3已派送，4已完成，5已取消")
     private Integer status;
 
-    @ApiModelProperty("下单用户")
+    @Schema(name = "下单用户")
     private Long userId;
 
-    @ApiModelProperty("地址id")
+    @Schema(name = "地址id")
     private Long addressBookId;
 
-    @ApiModelProperty("下单时间")
+    @Schema(name = "下单时间")
     private LocalDateTime orderTime;
 
-    @ApiModelProperty("结账时间")
+    @Schema(name = "结账时间")
     private LocalDateTime checkoutTime;
 
-    @ApiModelProperty("支付方式 1微信,2支付宝")
+    @Schema(name = "支付方式 1微信,2支付宝")
     private Integer payMethod;
 
-    @ApiModelProperty("实收金额")
+    @Schema(name = "实收金额")
     private BigDecimal amount;
 
-    @ApiModelProperty("备注")
+    @Schema(name = "备注")
     private String remark;
 
     private String phone;

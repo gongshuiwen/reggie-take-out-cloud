@@ -4,8 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,60 +12,53 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/**
- * <p>
- * 套餐菜品关系
- * </p>
- *
- * @author gongshuiwen
- * @since 2023-05-17
- */
+
 @Getter
 @Setter
 @TableName("setmeal_dish")
-@ApiModel(value = "SetmealDish对象", description = "套餐菜品关系")
+@Schema(name = "SetmealDish对象", description = "套餐菜品关系")
 public class SetmealDish implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键")
+    @Schema(name = "主键")
     private Long id;
 
-    @ApiModelProperty("套餐id")
+    @Schema(name = "套餐id")
     private Long setmealId;
 
-    @ApiModelProperty("菜品id")
+    @Schema(name = "菜品id")
     private Long dishId;
 
-    @ApiModelProperty("菜品名称 （冗余字段）")
+    @Schema(name = "菜品名称 （冗余字段）")
     private String name;
 
-    @ApiModelProperty("菜品原价（冗余字段）")
+    @Schema(name = "菜品原价（冗余字段）")
     private BigDecimal price;
 
-    @ApiModelProperty("份数")
+    @Schema(name = "份数")
     private Integer copies;
 
-    @ApiModelProperty("排序")
+    @Schema(name = "排序")
     private Integer sort;
 
-    @ApiModelProperty("创建时间")
+    @Schema(name = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @ApiModelProperty("更新时间")
+    @Schema(name = "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    @ApiModelProperty("创建人")
+    @Schema(name = "创建人")
     @TableField(fill = FieldFill.INSERT)
     private Long createUser;
 
-    @ApiModelProperty("修改人")
+    @Schema(name = "修改人")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 
-    @ApiModelProperty("是否删除")
+    @Schema(name = "是否删除")
     @TableLogic
     private Integer isDeleted;
 
