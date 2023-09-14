@@ -28,6 +28,7 @@
         <lombok.version>1.18.20</lombok.version>
         <minio.version>8.5.4</minio.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <mysql.version>8.0.33</mysql.version>
         <shardingsphere-jdbc-core.version>5.3.2</shardingsphere-jdbc-core.version>
         <snakeyaml.version>1.33</snakeyaml.version>
         <spring-session-data-redis.version>2.7.1</spring-session-data-redis.version>
@@ -63,12 +64,14 @@
             <version>${knife4j.version}</version>
         </dependency>
 
-        <!--[Dependencies]-->
+        <!--[Spring Dependencies]-->
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
             <version>${spring-session-data-redis.version}</version>
         </dependency>
+
+        <!--[Scope Compile]-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -112,6 +115,7 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql.version}</version>
             <scope>runtime</scope>
         </dependency>
 
