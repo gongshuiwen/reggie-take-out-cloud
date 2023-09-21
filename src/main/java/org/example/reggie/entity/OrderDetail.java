@@ -17,31 +17,31 @@ public class OrderDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description =  "主键")
     private Long id;
 
-    @Schema(name = "名字")
+    @Schema(description =  "名字")
     private String name;
 
-    @Schema(name = "图片")
+    @Schema(description =  "图片")
     private String image;
 
-    @Schema(name = "订单id")
+    @Schema(description =  "订单id")
     private Long orderId;
 
-    @Schema(name = "菜品id")
+    @Schema(description =  "菜品id")
     private Long dishId;
 
-    @Schema(name = "套餐id")
+    @Schema(description =  "套餐id")
     private Long setmealId;
 
-    @Schema(name = "口味")
+    @Schema(description =  "口味")
     private String dishFlavor;
 
-    @Schema(name = "数量")
+    @Schema(description =  "数量")
     private Integer number;
 
-    @Schema(name = "金额")
+    @Schema(description =  "金额")
     private BigDecimal amount;
 
 }

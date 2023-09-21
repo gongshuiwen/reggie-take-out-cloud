@@ -16,34 +16,34 @@ public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description =  "主键")
     private Long id;
 
-    @Schema(name = "订单号")
+    @Schema(description =  "订单号")
     private String number;
 
-    @Schema(name = "订单状态 1待付款，2待派送，3已派送，4已完成，5已取消")
+    @Schema(description =  "订单状态 1待付款，2待派送，3已派送，4已完成，5已取消")
     private Integer status;
 
-    @Schema(name = "下单用户")
+    @Schema(description =  "下单用户")
     private Long userId;
 
-    @Schema(name = "地址id")
+    @Schema(description =  "地址id")
     private Long addressBookId;
 
-    @Schema(name = "下单时间")
+    @Schema(description =  "下单时间")
     private LocalDateTime orderTime;
 
-    @Schema(name = "结账时间")
+    @Schema(description =  "结账时间")
     private LocalDateTime checkoutTime;
 
-    @Schema(name = "支付方式 1微信,2支付宝")
+    @Schema(description =  "支付方式 1微信,2支付宝")
     private Integer payMethod;
 
-    @Schema(name = "实收金额")
+    @Schema(description =  "实收金额")
     private BigDecimal amount;
 
-    @Schema(name = "备注")
+    @Schema(description =  "备注")
     private String remark;
 
     private String phone;

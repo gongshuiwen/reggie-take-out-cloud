@@ -20,35 +20,35 @@ public class DishFlavor implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description =  "主键")
     private Long id;
 
-    @Schema(name = "菜品")
+    @Schema(description =  "菜品")
     private Long dishId;
 
-    @Schema(name = "口味名称")
+    @Schema(description =  "口味名称")
     private String name;
 
-    @Schema(name = "口味数据list")
+    @Schema(description =  "口味数据list")
     private String value;
 
-    @Schema(name = "创建时间")
+    @Schema(description =  "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @Schema(name = "更新时间")
+    @Schema(description =  "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    @Schema(name = "创建人")
+    @Schema(description =  "创建人")
     @TableField(fill = FieldFill.INSERT)
     private Long createUser;
 
-    @Schema(name = "修改人")
+    @Schema(description =  "修改人")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 
-    @Schema(name = "是否删除")
+    @Schema(description =  "是否删除")
     @TableLogic
     private Integer isDeleted;
 

@@ -20,34 +20,34 @@ public class ShoppingCart implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description =  "主键")
     private Long id;
 
-    @Schema(name = "名称")
+    @Schema(description =  "名称")
     private String name;
 
-    @Schema(name = "图片")
+    @Schema(description =  "图片")
     private String image;
 
-    @Schema(name = "主键")
+    @Schema(description =  "主键")
     private Long userId;
 
-    @Schema(name = "菜品id")
+    @Schema(description =  "菜品id")
     private Long dishId;
 
-    @Schema(name = "套餐id")
+    @Schema(description =  "套餐id")
     private Long setmealId;
 
-    @Schema(name = "口味")
+    @Schema(description =  "口味")
     private String dishFlavor;
 
-    @Schema(name = "数量")
+    @Schema(description =  "数量")
     private Integer number;
 
-    @Schema(name = "金额")
+    @Schema(description =  "金额")
     private BigDecimal amount;
 
-    @Schema(name = "创建时间")
+    @Schema(description =  "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 

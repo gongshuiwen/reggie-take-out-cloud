@@ -18,49 +18,49 @@ import java.util.Collections;
 
 @Getter
 @Setter
-@Schema(name = "Employee对象", description = "员工信息")
+@Schema(name =  "Employee对象", description = "员工信息")
 public class Employee implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description =  "主键")
     private Long id;
 
-    @Schema(name = "姓名")
+    @Schema(description =  "姓名")
     private String name;
 
-    @Schema(name = "用户名")
+    @Schema(description =  "用户名")
     private String username;
 
     @JsonIgnore
-    @Schema(name = "密码")
+    @Schema(description =  "密码")
     private String password;
 
-    @Schema(name = "手机号")
+    @Schema(description =  "手机号")
     private String phone;
 
-    @Schema(name = "性别")
+    @Schema(description =  "性别")
     private String sex;
 
-    @Schema(name = "身份证号")
+    @Schema(description =  "身份证号")
     private String idNumber;
 
-    @Schema(name = "状态 0:禁用，1:正常")
+    @Schema(description =  "状态 0:禁用，1:正常")
     private Integer status;
 
-    @Schema(name = "创建时间")
+    @Schema(description =  "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @Schema(name = "更新时间")
+    @Schema(description =  "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    @Schema(name = "创建人")
+    @Schema(description =  "创建人")
     @TableField(fill = FieldFill.INSERT)
     private Long createUser;
 
-    @Schema(name = "修改人")
+    @Schema(description =  "修改人")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 

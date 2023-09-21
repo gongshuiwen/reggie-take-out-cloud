@@ -21,44 +21,44 @@ public class SetmealDish implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description =  "主键")
     private Long id;
 
-    @Schema(name = "套餐id")
+    @Schema(description =  "套餐id")
     private Long setmealId;
 
-    @Schema(name = "菜品id")
+    @Schema(description =  "菜品id")
     private Long dishId;
 
-    @Schema(name = "菜品名称 （冗余字段）")
+    @Schema(description =  "菜品名称 （冗余字段）")
     private String name;
 
-    @Schema(name = "菜品原价（冗余字段）")
+    @Schema(description =  "菜品原价（冗余字段）")
     private BigDecimal price;
 
-    @Schema(name = "份数")
+    @Schema(description =  "份数")
     private Integer copies;
 
-    @Schema(name = "排序")
+    @Schema(description =  "排序")
     private Integer sort;
 
-    @Schema(name = "创建时间")
+    @Schema(description =  "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @Schema(name = "更新时间")
+    @Schema(description =  "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    @Schema(name = "创建人")
+    @Schema(description =  "创建人")
     @TableField(fill = FieldFill.INSERT)
     private Long createUser;
 
-    @Schema(name = "修改人")
+    @Schema(description =  "修改人")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 
-    @Schema(name = "是否删除")
+    @Schema(description =  "是否删除")
     @TableLogic
     private Integer isDeleted;
 

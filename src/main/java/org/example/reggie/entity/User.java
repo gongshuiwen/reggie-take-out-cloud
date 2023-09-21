@@ -20,25 +20,25 @@ public class User implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description =  "主键")
     private Long id;
 
-    @Schema(name = "姓名")
+    @Schema(description =  "姓名")
     private String name;
 
-    @Schema(name = "手机号")
+    @Schema(description =  "手机号")
     private String phone;
 
-    @Schema(name = "性别")
+    @Schema(description =  "性别")
     private String sex;
 
-    @Schema(name = "身份证号")
+    @Schema(description =  "身份证号")
     private String idNumber;
 
-    @Schema(name = "头像")
+    @Schema(description =  "头像")
     private String avatar;
 
-    @Schema(name = "状态 0:禁用，1:正常")
+    @Schema(description =  "状态 0:禁用，1:正常")
     private Integer status;
 
     @Override

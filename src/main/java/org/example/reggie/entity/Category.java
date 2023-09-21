@@ -12,36 +12,36 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Schema(name = "Category对象", description = "菜品及套餐分类")
+@Schema(name =  "Category对象", description = "菜品及套餐分类")
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description =  "主键")
     private Long id;
 
-    @Schema(name = "类型   1 菜品分类 2 套餐分类")
+    @Schema(description =  "类型   1 菜品分类 2 套餐分类")
     private Integer type;
 
-    @Schema(name = "分类名称")
+    @Schema(description =  "分类名称")
     private String name;
 
-    @Schema(name = "顺序")
+    @Schema(description =  "顺序")
     private Integer sort;
 
-    @Schema(name = "创建时间")
+    @Schema(description =  "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @Schema(name = "更新时间")
+    @Schema(description =  "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    @Schema(name = "创建人")
+    @Schema(description =  "创建人")
     @TableField(fill = FieldFill.INSERT)
     private Long createUser;
 
-    @Schema(name = "修改人")
+    @Schema(description =  "修改人")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 
