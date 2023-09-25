@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,21 +19,30 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.DigestUtils;
 
 @Configuration
 public class WebSecurityConfig {
+
+    private static final RequestMatcher LOGOUT_REQUEST_MATCHER = new OrRequestMatcher(
+            new AntPathRequestMatcher("/employee/logout", HttpMethod.POST.name()),
+            new AntPathRequestMatcher("/user/logout", HttpMethod.POST.name()));
 
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             MsgCodeAuthenticationProvider msgCodeAuthenticationProvider,
             DaoAuthenticationProvider daoAuthenticationProvider) throws Exception {
+
+        // Create and set up custom authentication filter
         CustomAuthenticationProcessingFilter filter = new CustomAuthenticationProcessingFilter();
         filter.setAuthenticationSuccessHandler(new CustomAuthenticationSuccessHandler());
         filter.setAuthenticationFailureHandler(new CustomAuthenticationFailureHandler());
 
         http
+                // Disable csrf token validation for api
+                .csrf().disable()
                 .authorizeHttpRequests(
                         (authorize) -> authorize
                                 .mvcMatchers(HttpMethod.GET, "/employee/page").hasRole("ADMIN")
@@ -47,13 +57,7 @@ public class WebSecurityConfig {
                                 .mvcMatchers("/user/sendMsgCode").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .csrf().disable()
-                .logout(httpSecurityLogoutConfigurer ->
-                        httpSecurityLogoutConfigurer
-                                .logoutRequestMatcher(
-                                        new OrRequestMatcher(
-                                            new AntPathRequestMatcher("/employee/logout", "POST"),
-                                            new AntPathRequestMatcher("/user/logout", "POST"))))
+                .logout(configurer -> configurer.logoutRequestMatcher(LOGOUT_REQUEST_MATCHER))
                 .headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.frameOptions().sameOrigin())
                 .authenticationProvider(msgCodeAuthenticationProvider)
                 .authenticationProvider(daoAuthenticationProvider)
