@@ -37,7 +37,7 @@ public class RedisConfig {
      * 配置 RedisSerializer
      */
     @Bean
-    private RedisSerializer<Object> redisSerializer() {
+    public RedisSerializer<Object> redisSerializer() {
         return new GenericJackson2JsonRedisSerializer(objectMapperForRedisValueSerializer());
     }
 
