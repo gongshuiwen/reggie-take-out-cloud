@@ -15,11 +15,10 @@ import org.springframework.security.jackson2.SecurityJackson2Modules;
 @Configuration
 public class RedisConfig {
 
-    /**
-     * 配置 RedisTemplate
-     */
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+    public RedisTemplate<String, Object> redisTemplate(
+            RedisConnectionFactory redisConnectionFactory,
+            RedisSerializer<Object> valueSerializer) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 
@@ -29,24 +28,17 @@ public class RedisConfig {
         redisTemplate.setHashKeySerializer(keySerializer);
 
         // Set value serializer
-        RedisSerializer<Object> valueSerializer = redisValueSerializer();
         redisTemplate.setValueSerializer(valueSerializer);
         redisTemplate.setHashValueSerializer(valueSerializer);
 
         return redisTemplate;
     }
 
-    /**
-     * 配置 RedisSerializer
-     */
     @Bean
     public RedisSerializer<Object> redisValueSerializer() {
         return new GenericJackson2JsonRedisSerializer(objectMapperForRedisValueSerializer());
     }
 
-    /**
-     * 配置 RedisSerializer 使用的 ObjectMapper 实例
-     */
     private ObjectMapper objectMapperForRedisValueSerializer() {
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -56,6 +48,7 @@ public class RedisConfig {
         // Register modules from SecurityJackson2Modules
         // (already include com.fasterxml.jackson.datatype.jsr310.JavaTimeModule)
         objectMapper.registerModules(SecurityJackson2Modules.getModules(RedisConfig.class.getClassLoader()));
+
         return objectMapper;
     }
 }
