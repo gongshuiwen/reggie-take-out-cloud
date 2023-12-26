@@ -2,7 +2,7 @@ server:
   port: 9090
 spring:
   application:
-    name: reggie_take_out
+    name: reggie-backend
   main:
     allow-bean-definition-overriding: true
     allow-circular-references: true

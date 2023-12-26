@@ -49,8 +49,6 @@ public class WebSecurityConfig {
                                 .mvcMatchers(HttpMethod.POST, "/employee").hasRole("ADMIN")
                                 .mvcMatchers(HttpMethod.PUT, "/employee").hasRole("ADMIN")
                                 .mvcMatchers(HttpMethod.DELETE, "/employee").hasRole("ADMIN")
-                                .mvcMatchers("/front/**").permitAll()
-                                .mvcMatchers("/backend/**").permitAll()
                                 .mvcMatchers("/v3/api-docs/**").permitAll()
                                 .mvcMatchers("/doc.html").permitAll()
                                 .mvcMatchers("/webjars/**").permitAll()

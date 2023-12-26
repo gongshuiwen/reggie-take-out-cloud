@@ -1,0 +1,23 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: reggie-take-out-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.88.243:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: reggie-backend
+          uri: lb://reggie-backend
+          predicates:
+            - Path=/addressBook/**,/category/**,/common/**,/dish/**,/employee/**,/order/**,/setmeal/**,/shoppingCart/**,/user/**
+          filters:
+            - RewritePath=/(?<segment>.*),/$\{segment}
+  mvc:
+    servlet:
+      load-on-startup: 1
