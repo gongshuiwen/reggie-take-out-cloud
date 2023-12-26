@@ -21,21 +21,23 @@ public class RedisConfig {
     public RedisTemplate<String, Object> redisTemplate(
             RedisConnectionFactory redisConnectionFactory,
             RedisSerializer<Object> valueSerializer) {
-        // Key Serializer
-        StringRedisSerializer keySerializer = new StringRedisSerializer();
-
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
+
+        // Set key serializer
+        StringRedisSerializer keySerializer = new StringRedisSerializer();
         redisTemplate.setKeySerializer(keySerializer);
-        redisTemplate.setValueSerializer(valueSerializer);
         redisTemplate.setHashKeySerializer(keySerializer);
+
+        // Set value serializer
+        redisTemplate.setValueSerializer(valueSerializer);
         redisTemplate.setHashValueSerializer(valueSerializer);
-        redisTemplate.afterPropertiesSet();
+
         return redisTemplate;
     }
 
     @Bean
-    public RedisSerializer<Object> redisSerializer() {
+    public RedisSerializer<Object> redisValueSerializer() {
         return new GenericJackson2JsonRedisSerializer(objectMapperForRedisValueSerializer());
     }
 
