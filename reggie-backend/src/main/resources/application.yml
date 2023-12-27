@@ -1,20 +1,19 @@
-server:
-  port: 9090
-spring:
-  application:
-    name: reggie-backend
-  main:
-    allow-bean-definition-overriding: true
-    allow-circular-references: true
-  mvc:
-    servlet:
-      load-on-startup: 1
-logging:
-  level:
-    root: info
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
   global-config:
     db-config:
       id-type: ASSIGN_ID
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: org.example.reggie
+  swagger-ui:
+    enabled: false
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn

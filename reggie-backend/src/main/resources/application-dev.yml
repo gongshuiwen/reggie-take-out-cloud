@@ -1,8 +1,4 @@
 spring:
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 192.168.88.243:8848
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -10,7 +6,7 @@ spring:
       username: root
       password: password
   redis:
-    host: 192.168.88.243
+    host: 127.0.0.1
     database: 0
     port: 6379
     password:
@@ -24,16 +20,3 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  group-configs:
-    - group: 'default'
-      paths-to-match: '/**'
-      packages-to-scan: org.example.reggie
-  swagger-ui:
-    enable: false
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn
