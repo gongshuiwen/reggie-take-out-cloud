@@ -1,0 +1,10 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: reggie-gateway
+  cloud:
+    nacos:
+      server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8848}
+      config:
+        file-extension: yml

@@ -1,12 +1,5 @@
-server:
-  port: 8080
 spring:
-  application:
-    name: reggie-gateway
   cloud:
-    nacos:
-      discovery:
-        server-addr: 192.168.88.243:8848
     gateway:
       routes:
         - id: reggie-backend
