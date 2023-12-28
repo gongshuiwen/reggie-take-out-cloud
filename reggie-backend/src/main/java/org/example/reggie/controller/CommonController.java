@@ -2,7 +2,7 @@ package org.example.reggie.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.example.reggie.common.R;
+import org.example.reggie.common.protocal.R;
 import org.example.reggie.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

@@ -1,7 +1,7 @@
 package org.example.reggie.config;
 
 import com.alibaba.fastjson.JSON;
-import org.example.reggie.common.R;
+import org.example.reggie.common.protocal.R;
 import org.example.reggie.security.*;
 import org.example.reggie.security.handler.CustomAuthenticationFailureHandler;
 import org.example.reggie.security.handler.CustomAuthenticationSuccessHandler;
@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

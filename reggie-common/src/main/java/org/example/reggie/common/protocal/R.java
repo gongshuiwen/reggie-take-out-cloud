@@ -1,9 +1,6 @@
-package org.example.reggie.common;
+package org.example.reggie.common.protocal;
 
 import lombok.Data;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Data
 public class R<T> {
@@ -11,7 +8,6 @@ public class R<T> {
     private Integer code;
     private String msg;
     private T data;
-    private Map<String, String> map = new HashMap<>();
 
     public static <T> R<T> success(T obj) {
         R<T> r = new R<T>();
@@ -26,10 +22,5 @@ public class R<T> {
         r.setCode(0);
         r.setMsg(message);
         return r;
-    }
-
-    public R<T> add(String key, String value) {
-        this.map.put(key, value);
-        return this;
     }
 }

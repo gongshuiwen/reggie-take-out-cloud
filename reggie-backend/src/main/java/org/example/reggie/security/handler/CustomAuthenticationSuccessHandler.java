@@ -1,7 +1,7 @@
 package org.example.reggie.security.handler;
 
 import com.alibaba.fastjson.JSON;
-import org.example.reggie.common.R;
+import org.example.reggie.common.protocal.R;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;

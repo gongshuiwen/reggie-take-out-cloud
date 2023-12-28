@@ -4,6 +4,9 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
+spring:
+  main:
+    allow-circular-references: true
 springdoc:
   api-docs:
     path: /v3/api-docs

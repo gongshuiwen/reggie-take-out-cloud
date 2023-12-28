@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.example.reggie.common.BaseContext;
-import org.example.reggie.common.R;
+import org.example.reggie.common.protocal.R;
 import org.example.reggie.entity.Orders;
 import org.example.reggie.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;

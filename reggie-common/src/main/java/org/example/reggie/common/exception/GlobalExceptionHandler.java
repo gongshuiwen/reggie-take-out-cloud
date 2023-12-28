@@ -1,12 +1,8 @@
-package org.example.reggie.common;
+package org.example.reggie.common.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.reggie.exception.MyException;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.example.reggie.common.protocal.R;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 
@@ -15,7 +11,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
  */
 @Slf4j
 @ResponseBody
-@ControllerAdvice(annotations = {RestController.class, Controller.class})
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)

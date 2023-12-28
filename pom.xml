@@ -18,6 +18,8 @@
     <modules>
         <module>reggie-gateway</module>
         <module>reggie-backend</module>
+        <module>reggie-user</module>
+        <module>reggie-common</module>
     </modules>
 
     <properties>

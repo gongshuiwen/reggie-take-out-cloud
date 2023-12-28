@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.reggie.entity.Category;
 import org.example.reggie.entity.Dish;
 import org.example.reggie.entity.Setmeal;
-import org.example.reggie.exception.MyException;
+import org.example.reggie.common.exception.MyException;
 import org.example.reggie.mapper.CategoryMapper;
 import org.example.reggie.service.CategoryService;
 import org.example.reggie.service.DishService;
