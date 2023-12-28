@@ -170,7 +170,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
             @CacheEvict(value = DISHES_LIST_BY_CATEGORY_CACHE_KEY, key="#dish.categoryId"),
             @CacheEvict(value = DISHES_LIST_BY_CATEGORY_CACHE_KEY, key="#result.categoryId")
     })
-    private Dish updateWithFlavorsImpl(Dish dish) {
+    protected Dish updateWithFlavorsImpl(Dish dish) {
         Dish oldDish = this.getById(dish.getId());
         this.updateById(dish);
 
