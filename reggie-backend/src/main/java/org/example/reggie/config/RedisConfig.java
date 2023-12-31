@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import org.example.reggie.security.MsgCodeAuthenticationToken;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -58,6 +59,15 @@ public class RedisConfig {
         // (already include com.fasterxml.jackson.datatype.jsr310.JavaTimeModule)
         objectMapper.registerModules(SecurityJackson2Modules.getModules(RedisConfig.class.getClassLoader()));
 
+        // Add mix-in annotations for MsgCodeAuthenticationToken
+        Class<?> mixInClazz;
+        try {
+            mixInClazz = ClassLoader.getSystemClassLoader()
+                    .loadClass("org.springframework.security.jackson2.UsernamePasswordAuthenticationTokenMixin");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        objectMapper.addMixIn(MsgCodeAuthenticationToken.class, mixInClazz);
         return objectMapper;
     }
 }
