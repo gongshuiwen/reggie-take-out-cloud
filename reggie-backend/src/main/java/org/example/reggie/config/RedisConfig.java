@@ -53,7 +53,7 @@ public class RedisConfig {
         objectMapper.activateDefaultTyping(
                 LaissezFaireSubTypeValidator.instance,
                 ObjectMapper.DefaultTyping.NON_FINAL,
-                JsonTypeInfo.As.WRAPPER_ARRAY);
+                JsonTypeInfo.As.PROPERTY);
 
         // Register modules from SecurityJackson2Modules
         // (already include com.fasterxml.jackson.datatype.jsr310.JavaTimeModule)
