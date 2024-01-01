@@ -1,4 +1,4 @@
-package org.example.reggie.entity;
+package org.example.reggie.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;

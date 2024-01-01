@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.reggie.entity.*;
+import org.example.reggie.user.entity.*;
 import org.example.reggie.mapper.OrdersMapper;
 import org.example.reggie.service.*;
 import org.springframework.beans.factory.annotation.Autowired;

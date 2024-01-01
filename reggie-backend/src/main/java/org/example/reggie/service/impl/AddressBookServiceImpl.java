@@ -3,7 +3,7 @@ package org.example.reggie.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.example.reggie.entity.AddressBook;
+import org.example.reggie.user.entity.AddressBook;
 import org.example.reggie.mapper.AddressBookMapper;
 import org.example.reggie.service.AddressBookService;
 import org.springframework.stereotype.Service;

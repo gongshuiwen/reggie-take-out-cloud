@@ -1,12 +1,14 @@
 package org.example.reggie.security;
 
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.Assert;
 
 import java.util.Collection;
 
+@Getter
 public class MsgCodeAuthenticationToken extends AbstractAuthenticationToken {
 
     private static final long serialVersionUID = 1110L;
@@ -33,14 +35,6 @@ public class MsgCodeAuthenticationToken extends AbstractAuthenticationToken {
 
     public static MsgCodeAuthenticationToken authenticated(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
         return new MsgCodeAuthenticationToken(principal, credentials, authorities);
-    }
-
-    public Object getCredentials() {
-        return this.credentials;
-    }
-
-    public Object getPrincipal() {
-        return this.principal;
     }
 
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
