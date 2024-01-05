@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>reggie-user-api</module>
+        <module>reggie-user-biz</module>
     </modules>
 
     <properties>
