@@ -14,6 +14,5 @@ public interface AddressBookService extends IService<AddressBook> {
 
     AddressBook getUserDefaultAddressBook(Long userId);
 
-    @Transactional
     Boolean setUserDefaultAddressBook(Long userId, Long id);
 }

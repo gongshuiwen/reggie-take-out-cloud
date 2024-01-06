@@ -7,6 +7,7 @@ import org.example.reggie.user.entity.AddressBook;
 import org.example.reggie.user.mapper.AddressBookMapper;
 import org.example.reggie.user.service.AddressBookService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class AddressBookServiceImpl extends ServiceImpl<AddressBookMapper, Addre
     }
 
     @Override
+    @Transactional
     public Boolean setUserDefaultAddressBook(Long userId, Long id) {
         // 取消旧的默认地址
         this.update(new LambdaUpdateWrapper<AddressBook>()
