@@ -1,8 +1,11 @@
 package org.example.reggie.config;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
@@ -23,8 +26,11 @@ import java.time.format.DateTimeFormatter;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
-    public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
+    public static final String DEFAULT_DATE_TIME_FORMAT = DEFAULT_DATE_FORMAT + " " + DEFAULT_TIME_FORMAT;
+    public static final DateTimeFormatter DEFAULT_DATE_FORMATTER = DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT);
+    public static final DateTimeFormatter DEFAULT_TIME_FORMATTER = DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT);
+    public static final DateTimeFormatter DEFAULT_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT);
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
@@ -33,14 +39,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
-                .serializerByType(BigInteger.class, ToStringSerializer.instance)
-                .serializerByType(Long.class, ToStringSerializer.instance)
-                .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)))
-                .serializerByType(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)))
-                .serializerByType(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT)))
+        ObjectMapper mapper = new Jackson2ObjectMapperBuilder()
                 .simpleDateFormat(DEFAULT_DATE_TIME_FORMAT)
-                .serializationInclusion(JsonInclude.Include.NON_NULL);
-        return new MappingJackson2HttpMessageConverter(builder.build());
+                .serializerByType(Long.class, ToStringSerializer.instance)
+                .serializerByType(BigInteger.class, ToStringSerializer.instance)
+                .serializerByType(LocalDate.class, new LocalDateSerializer(DEFAULT_DATE_FORMATTER))
+                .serializerByType(LocalTime.class, new LocalTimeSerializer(DEFAULT_TIME_FORMATTER))
+                .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(DEFAULT_DATE_TIME_FORMATTER))
+                .deserializerByType(LocalDate.class, new LocalDateDeserializer(DEFAULT_DATE_FORMATTER))
+                .deserializerByType(LocalTime.class, new LocalTimeDeserializer(DEFAULT_TIME_FORMATTER))
+                .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DEFAULT_DATE_TIME_FORMATTER))
+                .build();
+        return new MappingJackson2HttpMessageConverter(mapper);
     }
 }
