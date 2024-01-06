@@ -2,7 +2,6 @@ package org.example.reggie.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.example.reggie.user.entity.AddressBook;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
