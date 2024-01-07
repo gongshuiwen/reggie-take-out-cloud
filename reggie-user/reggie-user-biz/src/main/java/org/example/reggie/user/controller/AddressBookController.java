@@ -22,7 +22,7 @@ public class AddressBookController {
 
     private final AddressBookService addressBookService;
 
-    @Operation(summary = "查询单个地址簿信息")
+    @Operation(summary = "查询地址簿信息")
     @GetMapping("/{id}")
     public R<AddressBook> get(@PathVariable Long id) {
         return R.success(addressBookService.getById(id));
@@ -35,15 +35,16 @@ public class AddressBookController {
     }
 
     @Operation(summary = "更新地址簿信息")
-    @PutMapping
-    public R<Boolean> update(@RequestBody AddressBook addressBook) {
+    @PutMapping("/{id}")
+    public R<Boolean> update(@PathVariable Long id, @RequestBody AddressBook addressBook) {
+        addressBook.setId(id);
         return R.success(addressBookService.updateById(addressBook));
     }
 
     @Operation(summary = "删除地址簿信息")
-    @DeleteMapping
-    public R<Boolean> delete(@RequestParam List<Long> ids){
-        return R.success(addressBookService.removeByIds(ids));
+    @DeleteMapping("/{id}")
+    public R<Boolean> delete(@PathVariable Long id){
+        return R.success(addressBookService.removeById(id));
     }
 
     @Operation(summary = "列表查询地址簿信息")
