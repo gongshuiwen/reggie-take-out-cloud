@@ -15,44 +15,46 @@ import java.util.List;
 public class AddressBookServiceImpl extends ServiceImpl<AddressBookMapper, AddressBook> implements AddressBookService {
 
     @Override
+    @Transactional
     public AddressBook saveWithUserId(Long userId, AddressBook addressBook) {
-        LambdaQueryWrapper<AddressBook> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(AddressBook::getUserId, userId);
-        addressBook.setIsDefault(count(wrapper) == 0);
+        addressBook.setIsDefault(countByUserId(userId) == 0);
         addressBook.setUserId(userId);
-        this.save(addressBook);
+        save(addressBook);
         return addressBook;
+    }
+
+    private long countByUserId(Long userId) {
+        return count(new LambdaQueryWrapper<AddressBook>().eq(AddressBook::getUserId, userId));
     }
 
     @Override
     public List<AddressBook> listByUserId(Long userId) {
         LambdaQueryWrapper<AddressBook> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(AddressBook::getUserId, userId);
-        return this.list(wrapper);
+        return list(wrapper);
     }
 
     @Override
     public AddressBook getUserDefaultAddressBook(Long userId) {
-        LambdaQueryWrapper<AddressBook> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(AddressBook::getUserId, userId);
-        wrapper.eq(AddressBook::getIsDefault, 1);
-        return this.getOne(wrapper);
+        return getOne(new LambdaQueryWrapper<AddressBook>()
+                .eq(AddressBook::getUserId, userId)
+                .eq(AddressBook::getIsDefault, Boolean.TRUE));
     }
 
     @Override
     @Transactional
     public Boolean setUserDefaultAddressBook(Long userId, Long id) {
         // 取消旧的默认地址
-        this.update(new LambdaUpdateWrapper<AddressBook>()
-                .set(AddressBook::getIsDefault, Boolean.FALSE)
+        update(new LambdaUpdateWrapper<AddressBook>()
                 .eq(AddressBook::getUserId, userId)
-                .eq(AddressBook::getIsDefault, Boolean.TRUE));
+                .eq(AddressBook::getIsDefault, Boolean.TRUE)
+                .set(AddressBook::getIsDefault, Boolean.FALSE));
 
         // 设置新的默认地址
-        this.update(new LambdaUpdateWrapper<AddressBook>()
-                .set(AddressBook::getIsDefault, Boolean.TRUE)
+        update(new LambdaUpdateWrapper<AddressBook>()
                 .eq(AddressBook::getId, id)
-                .eq(AddressBook::getIsDefault, Boolean.FALSE));
+                .eq(AddressBook::getIsDefault, Boolean.FALSE)
+                .set(AddressBook::getIsDefault, Boolean.TRUE));
 
         return Boolean.TRUE;
     }
