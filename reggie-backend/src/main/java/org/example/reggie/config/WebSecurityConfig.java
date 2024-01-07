@@ -1,8 +1,9 @@
 package org.example.reggie.config;
 
-import com.alibaba.fastjson.JSON;
-import org.example.reggie.common.protocal.R;
-import org.example.reggie.security.*;
+import org.example.reggie.common.security.CustomAccessDeniedHandler;
+import org.example.reggie.common.security.CustomAuthenticationEntryPoint;
+import org.example.reggie.security.CustomAuthenticationProcessingFilter;
+import org.example.reggie.security.MsgCodeAuthenticationProvider;
 import org.example.reggie.security.handler.CustomAuthenticationFailureHandler;
 import org.example.reggie.security.handler.CustomAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
@@ -63,10 +64,7 @@ public class WebSecurityConfig {
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
                         httpSecurityExceptionHandlingConfigurer
                                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-                                .accessDeniedHandler((request, response, accessDeniedException) -> {
-                                    response.setContentType("application/json;charset=UTF-8");
-                                    response.getWriter().write(JSON.toJSONString(R.error("权限错误")));
-                                }));
+                                .accessDeniedHandler(new CustomAccessDeniedHandler()));
         SecurityFilterChain securityFilterChain = http.build();
         filter.setAuthenticationManager(http.getSharedObject(AuthenticationManager.class));
         return securityFilterChain;

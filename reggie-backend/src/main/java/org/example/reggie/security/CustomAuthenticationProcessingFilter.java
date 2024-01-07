@@ -1,6 +1,7 @@
 package org.example.reggie.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.reggie.common.security.MsgCodeAuthenticationToken;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;

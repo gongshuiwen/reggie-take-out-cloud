@@ -1,6 +1,7 @@
 package org.example.reggie.security;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.example.reggie.common.security.MsgCodeAuthenticationToken;
 import org.example.reggie.service.UserService;
 import org.example.reggie.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;

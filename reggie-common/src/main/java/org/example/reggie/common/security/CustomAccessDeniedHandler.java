@@ -1,4 +1,4 @@
-package org.example.reggie.security.handler;
+package org.example.reggie.common.security;
 
 import com.alibaba.fastjson.JSON;
 import org.example.reggie.common.protocal.R;
@@ -9,6 +9,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
