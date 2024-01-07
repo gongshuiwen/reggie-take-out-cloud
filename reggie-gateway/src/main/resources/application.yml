@@ -5,4 +5,8 @@ spring:
         - id: reggie-backend
           uri: lb://reggie-backend
           predicates:
-            - Path=/addressBook/**,/category/**,/common/**,/dish/**,/employee/**,/order/**,/setmeal/**,/shoppingCart/**,/user/**
+            - Path=/category/**,/common/**,/dish/**,/employee/**,/order/**,/setmeal/**,/shoppingCart/**,/user/login/**
+        - id: reggie-user
+          uri: lb://reggie-user
+          predicates:
+            - Path=/addressBook/**,/user/**
