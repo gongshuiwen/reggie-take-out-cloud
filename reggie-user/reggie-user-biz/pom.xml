@@ -15,6 +15,8 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--[Project Dependencies Version]-->
+        <reggie-user-api.version>1.0-SNAPSHOT</reggie-user-api.version>
         <!--[Dependencies Version]-->
         <commons-lang.version>2.6</commons-lang.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
@@ -31,7 +33,7 @@
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>reggie-user-api</artifactId>
-            <version>${project.version}</version>
+            <version>${reggie-user-api.version}</version>
         </dependency>
 
         <!--[SpringCloud Starters]-->
