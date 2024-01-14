@@ -3,11 +3,18 @@ package org.example.reggie.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.example.reggie.entity.*;
-import org.example.reggie.user.entity.*;
+import lombok.RequiredArgsConstructor;
+import org.example.reggie.entity.OrderDetail;
+import org.example.reggie.entity.Orders;
+import org.example.reggie.entity.ShoppingCart;
 import org.example.reggie.mapper.OrdersMapper;
-import org.example.reggie.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.reggie.service.OrderDetailService;
+import org.example.reggie.service.OrdersService;
+import org.example.reggie.service.ShoppingCartService;
+import org.example.reggie.user.entity.AddressBook;
+import org.example.reggie.user.entity.User;
+import org.example.reggie.user.feign.AddressBookFeignClient;
+import org.example.reggie.user.feign.UserFeignClient;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -16,19 +23,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> implements OrdersService {
 
-    @Autowired
-    private ShoppingCartService shoppingCartService;
-
-    @Autowired
-    private OrderDetailService orderDetailService;
-
-    @Autowired
-    private AddressBookService addressBookService;
-
-    @Autowired
-    private UserService userService;
+    private final ShoppingCartService shoppingCartService;
+    private final OrderDetailService orderDetailService;
+    private final AddressBookFeignClient addressBookService;
+    private final UserFeignClient userService;
 
     @Override
     public Boolean submitOrder(Orders order) {
