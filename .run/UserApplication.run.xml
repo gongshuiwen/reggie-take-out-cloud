@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="UserApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <option name="ACTIVE_PROFILES" value="dev" />
+    <option name="DEBUG_MODE" value="true" />
+    <option name="HIDE_BANNER" value="true" />
+    <module name="reggie-user-biz" />
+    <option name="SHORTEN_COMMAND_LINE" value="MANIFEST" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.reggie.user.UserApplication" />
+    <option name="VM_PARAMETERS" value="-Dserver.port=9101" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="org.example.reggie.user.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
