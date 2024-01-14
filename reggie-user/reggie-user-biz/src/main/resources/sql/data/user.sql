@@ -1,0 +1,1 @@
+INSERT INTO `user` VALUES ('1417012167126876162', '小明', '13812345678', null, null, null, 1);
