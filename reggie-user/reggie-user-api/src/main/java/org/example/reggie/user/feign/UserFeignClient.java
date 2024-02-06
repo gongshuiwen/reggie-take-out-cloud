@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.*;
 @FeignClient(value = "reggie-user", configuration = DefaultFeignConfig.class)
 public interface UserFeignClient {
 
-    @GetMapping("/rpc/user/{id}")
+    String BASE_URL = "/feign/user";
+
+    @GetMapping(BASE_URL + "/{id}")
     User getById(@PathVariable Long id);
 
-    @GetMapping("/rpc/user")
+    @GetMapping(BASE_URL)
     User selectByPhone(@RequestParam String phone);
 
-    @PostMapping("/rpc/user/register")
+    @PostMapping(BASE_URL + "/register")
     User registerByPhone(@RequestParam String phone);
 }
