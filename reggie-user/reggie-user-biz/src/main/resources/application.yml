@@ -12,8 +12,11 @@ springdoc:
     path: /v3/api-docs
   group-configs:
     - group: 'default'
-      paths-to-match: /user/**,/addressBook/**
+      paths-to-match: /**
       packages-to-scan: org.example.reggie.user.controller,
+    - group: 'rpc'
+      paths-to-match: /rpc/**
+      packages-to-scan: org.example.reggie.user.feign,
   swagger-ui:
     enabled: true
 knife4j:
