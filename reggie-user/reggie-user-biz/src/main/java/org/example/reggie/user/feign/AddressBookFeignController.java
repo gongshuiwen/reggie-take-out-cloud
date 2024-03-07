@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rpc/addressBook")
+@RequestMapping(AddressBookFeignClient.BASE_URL)
 public class AddressBookFeignController implements AddressBookFeignClient {
 
     private final AddressBookService addressBookService;

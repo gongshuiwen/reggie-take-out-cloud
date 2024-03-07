@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rpc/user")
+@RequestMapping(UserFeignClient.BASE_URL)
 public class UserFeignController implements UserFeignClient {
 
     private final UserService userService;
